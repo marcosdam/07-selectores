@@ -13,8 +13,11 @@ export class SelectorPageComponent implements OnInit {
 
   miFormulario: FormGroup = this.fb.group({
     region: [ '', Validators.required ],
-    pais: [ '', Validators.required ]
+    pais: [ '', Validators.required ],
+    frontera: [ '', Validators.required ]
   })
+
+  // https://restcountries.eu/rest/v2/alpha/col
 
   // llenar selectores
   regiones: string[] = [];
@@ -26,17 +29,6 @@ export class SelectorPageComponent implements OnInit {
     this.regiones = this.paisesService.regiones;
 
     // Cuando cambie la región
-    // this.miFormulario.get('region')?.valueChanges
-    //   .subscribe( region => {
-    //     console.log(region);
-
-    //     this.paisesService.getPaisesPorRegion( region )
-    //       .subscribe( paises => {
-    //         console.log(paises);
-    //         this.paises = paises;
-    //       })
-    //   })
-
     this.miFormulario.get('region')?.valueChanges
     .pipe(
       tap( ( _ ) => {
@@ -46,6 +38,15 @@ export class SelectorPageComponent implements OnInit {
     )
     .subscribe( paises => {
         this.paises = paises;
+      })
+
+    // Cuando cambie el país
+    this.miFormulario.get('pais')?.valueChanges
+    .pipe(
+      switchMap( codigo => this.paisesService.getPaisPorCodigo( codigo ) )
+    )
+    .subscribe( pais => {
+        console.log( pais );
       })
   }
 
