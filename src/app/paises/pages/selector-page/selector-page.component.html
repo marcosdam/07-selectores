@@ -14,7 +14,7 @@
     </div>
 
     <!--País-->
-    <div class="row mb-3">
+    <div class="row mb-3" *ngIf="paises.length !== 0">
         <div class="col">
             <label class="form-label">País:</label>
             <select class="form-control" formControlName="pais">
@@ -25,7 +25,7 @@
     </div>
 
     <!--Fronteras-->
-    <div class="row mb-3">
+    <div class="row mb-3" *ngIf="fronteras.length > 0">
         <div class="col">
             <label class="form-label">Fronteras:</label>
             <select class="form-control" formControlName="frontera">
@@ -35,6 +35,16 @@
         </div>
     </div>
 
+    <!--Alert-->
+    <div class="row" *ngIf="cargando">
+        <div class="col">
+            <div class="alert alert-primary">
+                Cargando...
+            </div>
+        </div>
+    </div>
+
+    <!--Botón-->
     <div class="row">
         <div class="col">
             <button type="submit" class="btn btn-primary float-end">Guardar</button>
